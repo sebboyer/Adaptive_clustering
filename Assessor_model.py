@@ -69,7 +69,7 @@ class Experiment:
             self.results[a]={}
     
     # For each line in assessment_list procede to the clustering and print result
-    def procede_assessments(self):
+    def procede_assessments(self,n_cluster):
         
         # For each line in assessment_list
         for i in range(len(self.assessment_list)):
@@ -81,7 +81,7 @@ class Experiment:
             assessment.set_features()
             
             # Assessment
-            result=assessment.do_clusterization(2)
+            result=assessment.do_clusterization(n_cluster)
             
             # Record result of the assessment in dictionnary
             for j in range(len(set_of_objects)):
@@ -89,11 +89,28 @@ class Experiment:
                     ind1=self.assessment_list[i][1][k]
                     ind2=self.assessment_list[i][1][j]
                     self.results[assessor_ind][ind1,ind2]=(result[k]==result[j])
-            print result
+            #print result
             
     def get_results(self):
         return self.results
 
+
+def symmetrized_Votes(votes):
+    for key in votes:
+        key_pairs=votes[key].keys()
+        for key_pair in key_pairs:
+            votes[key][key_pair[1],key_pair[0]]=votes[key][key_pair]
+
+
+def generate_random_assessment(n_object_per_assessment,n_objects,n_assessors,n_assessments_per_assessor):
+    res=list()
+    for i in range(n_assessors):
+        for k in range(n_assessments_per_assessor):
+            ass_i=[i,list()]
+            for j in range(n_object_per_assessment):
+                ass_i[1].append(np.random.randint(0,n_objects))
+            res.append(ass_i)
+    return res
 
 # In[342]:
 

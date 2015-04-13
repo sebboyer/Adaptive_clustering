@@ -42,6 +42,7 @@ def compute_q(Delta_est,Assessors_est,Votes):
 def compute_Delta_est(q):
     N=np.shape(q[q.keys()[0]])[0]
     Delta_est=np.zeros((N,N))
+    N_exp=np.zeros((N,N))
     
     # Look every pair of object i,j
     for i in range(N):
@@ -60,12 +61,20 @@ def compute_Delta_est(q):
             # If pair i,j has at least one vote, compute the estimate for delta_ij otherwise set default value to -1
             if card_Nij!=0:
                 Delta_est[i,j]=Delta_est[i,j]/float(card_Nij)
+                N_exp[i,j]+=1
             else:
                 continue
+
+    N_exp[N_exp==0]=1
+    S_est=np.zeros((N,N))
+    for i in range(N):
+        for j in range(N):
+            S_est[i,j]=np.sqrt(Delta_est[i,j]*(1-Delta_est[i,j])/float(N_exp[i,j]))
                 
     Delta_est =0.5*(Delta_est +Delta_est.T)
+    N_exp =N_exp +N_exp.T
     
-    return Delta_est        
+    return Delta_est,S_est      
 
 
 
@@ -110,17 +119,18 @@ def EM_est(Votes,N,epsilon):
     count=0
     K=len(Votes.keys())
     Delta_down,Assessors_down=initialize_est(N,K)
+    S_est=np.zeros((N,N))
     q=compute_q(Delta_down,Assessors_down,Votes)
-    Delta_up=compute_Delta_est(q)
+    Delta_up,S_est=compute_Delta_est(q)
     Assessors_up=compute_Assessors_est(q,Votes)
     while np.amax(abs(Delta_down-Delta_up))>epsilon:
         count+=1
         Delta_down,Assessors_down=Delta_up,Assessors_up
         q=compute_q(Delta_down,Assessors_down,Votes)
-        Delta_up=compute_Delta_est(q)
+        Delta_up,S_est=compute_Delta_est(q)
         Assessors_up=compute_Assessors_est(q,Votes)
     print "Convergence reached in "+str(count)+" iterations"
-    return Delta_up,Assessors_up
+    return Delta_up,Assessors_up,S_est
 
 
 
