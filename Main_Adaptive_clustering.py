@@ -39,7 +39,7 @@ assessors_choice=nm.rand_ass_gene
 ###########################################################################
 ###  Setting parameters of the experiment
 ###########################################################################
-n_clusters=3
+n_clusters=4
 n_assessments=300
 n_object_per_assessment=7
 K=5
@@ -54,7 +54,7 @@ Known_K=False  # Do the experiment maker know the number of clusters ? (Yes= Kme
 ###########################################################################
 ###  Number of the experiment
 ###########################################################################
-nexp="14"
+nexp="15"
 
 
 ###########################################################################
@@ -71,10 +71,10 @@ res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_
 # adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
 # res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 
-# csvname="exploit"+nexp
-# setOfObjects_choice=nm.exploitpw_ob_gene	
-# adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
-# res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
+csvname="exploit"+nexp
+setOfObjects_choice=nm.exploitpw_ob_gene	
+adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
+res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 
 # csvname="explore"+nexp
 # setOfObjects_choice=nm.explore_ob_gene
