@@ -1,0 +1,6 @@
+ssh sebboyer@alfad7.csail.mit.edu
+pass CSAIL
+
+screen
+Crtl+a  d
+screen -r (re attach)
