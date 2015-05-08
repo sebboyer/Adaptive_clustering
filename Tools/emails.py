@@ -5,8 +5,8 @@ from smtplib         import SMTP_SSL
 
 
 
-def sendMe_email(email_text):
-	login, password = 'sebastienboyer54@gmail.com', "21011967"
+def sendMe_email(email_text,passw):
+	login, password = 'sebastienboyer54@gmail.com', passw
 	recipients = [login]
 
 	# create message
