@@ -3,11 +3,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from copy import copy, deepcopy
-import sys
-sys.path.insert(0, '/home/sebastien/Documents/Adaptive clustering/Simulation python/Consensus')
-sys.path.insert(0, '/home/sebastien/Documents/Adaptive clustering/Simulation python/Pb_sim')
-sys.path.insert(0, '/home/sebastien/Documents/Adaptive clustering/Simulation python/Adapt_strat')
-sys.path.insert(0, '/home/sebastien/Documents/Adaptive clustering/Simulation python/Tools')
+import os,sys
+
+
+sys.path.append("./Consensus")
+sys.path.append("./Pb_sim")
+sys.path.append("./Adapt_strat")
+sys.path.append("./Tools")
+
 
 
 import EM_algorithm as em
