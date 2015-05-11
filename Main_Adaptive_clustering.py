@@ -12,7 +12,7 @@ import montecarlo_experiments as mce
 # soo_50_easy
 # soo_50_hard
 
-[set_of_objects,real_clusters]=pck.load( open( "SetObjects/soo_100_3_hard.p", "rb" ) )	
+[set_of_objects,real_clusters]=pck.load( open( "SetObjects/soo_100_3.p", "rb" ) )	
 
 # ############# Load Assessors
 # One of the following :
@@ -33,8 +33,7 @@ set_of_assessors=pck.load( open( "SetAssessors/soa_noisy.p", "rb" ) )
 
 assessors_choice=nm.rand_ass_gene
 
-# ################  Conducting experiments
-
+##################  Conducting experiments
 
 ###########################################################################
 ###  Setting parameters of the experiment
@@ -42,7 +41,7 @@ assessors_choice=nm.rand_ass_gene
 n_clusters=4
 n_assessments=300
 n_object_per_assessment=7
-K=5
+K=10
 eval_num=pointsOfUpdate(n_assessments,K)
 n_exps=30
 em_prec=0.00001
@@ -54,7 +53,7 @@ Known_K=False  # Do the experiment maker know the number of clusters ? (Yes= Kme
 ###########################################################################
 ###  Number of the experiment
 ###########################################################################
-nexp="15"
+nexp="17"
 
 
 ###########################################################################

@@ -12,7 +12,7 @@ from copy import deepcopy
 
 # <codecell>
 
-def clusters_from_adjacency(A,n_clusters):
+def clusters_from_adjacency(A):
     n=np.shape(A)[0]
     B=deepcopy(A)
     clusters=np.zeros((1,n))

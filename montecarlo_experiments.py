@@ -5,10 +5,13 @@ import csv
 
 def procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,em_prec,EM,true_K,Known_K):
     result=list()
+    variation=list()
     n_objects=len(set_of_objects)
     exp=ass.Experiment(set_of_assessors,set_of_objects,adaptive_method)
     Delta_est=0
     S_est=0
+
+
 
     for j in range(n_assessments):
 
@@ -32,10 +35,12 @@ def procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_ass
             else:
                 est_adj=spc.adjacency_Clusters(Delta_est,n_clusters)
 
-            est_clusters=vis.clusters_from_adjacency(est_adj,n_clusters)
-            s=per.n_mutual_info(real_clusters,est_clusters,2)
+  
+            est_clusters=vis.clusters_from_adjacency(est_adj)
+            s=per.n_mutual_info(real_clusters,est_clusters,0)
             result.append(s)
-    return result
+
+    return result,variation
 
         
 def repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname):
@@ -43,20 +48,21 @@ def repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_asse
     count_badexp=0
 
     writefile="Results/"+csvname+".csv"
-    fd = open(writefile,'wb')
+    fd_res = open(writefile,'wb')
 
     for i in range(n_exps):
         print "Start experiment number "+str(i)
         #try:
-        res=procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,em_prec,EM,true_K,Known_K)
+        res,var=procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,em_prec,EM,true_K,Known_K)
         results.append(res)
-        writer=csv.writer(fd)
+        writer=csv.writer(fd_res)
         writer.writerow(res)
+
         # except :
         #     print "The experiment number "+str(i)+" failed !"
         #     count_badexp+=1
     #print str(100*count_badexp/float(n_exps))+"% of the experiments didn't finished"
-    fd.close()
+    fd_res.close()
 
     return np.array(results)
 
