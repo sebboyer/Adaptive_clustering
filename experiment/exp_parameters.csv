@@ -1,0 +1,7 @@
+exp_id,object_file,assessor_file,Kmax,n_assessments,nopa,Window,n_experiments,EM,assessor_known,exp_maker_know,rand,diversity,exploit,explore,centroid
+a,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,10,50,0,0,0,1,1,1,1,1
+b,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,5,10,50,0,0,0,1,1,1,1,1
+c,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,10,10,50,0,0,0,1,1,1,1,1
+d,SetObjects/soo_100_3.p,SetAssessors/soa_accurate.p,3,300,7,10,50,0,0,0,1,1,1,1,1
+e,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,5,300,7,10,50,0,0,0,1,1,1,1,1
+f,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,8,300,7,10,50,0,0,0,1,1,1,1,1

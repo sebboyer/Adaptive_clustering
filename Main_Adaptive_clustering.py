@@ -1,9 +1,10 @@
 from definitions import *
 import montecarlo_experiments as mce
+import read_experiment_table as ret
 
 
 
-
+'''
 ############### Load objects
 # One of the following :
 # soo_100_3
@@ -38,12 +39,12 @@ assessors_choice=nm.rand_ass_gene
 ###########################################################################
 ###  Setting parameters of the experiment
 ###########################################################################
-n_clusters=4
+n_clusters=3
 n_assessments=300
 n_object_per_assessment=7
 K=10
 eval_num=pointsOfUpdate(n_assessments,K)
-n_exps=30
+n_exps=50
 em_prec=0.00001
 EM=False
 true_K=False  # Do the assessors know the number of clusters ? (Yes= Kmeans, No=GMM)
@@ -87,6 +88,12 @@ res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_
 
 
 #emails.sendMe_email("Congrats, the simulation has terminated successfully ! ")
+'''
+
+
+exp_file="experiment/exp_parameters.csv"
+exp_list=['a']
+ret.conduct_experiment(exp_file,exp_list)
 
 
 

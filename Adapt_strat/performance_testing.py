@@ -36,7 +36,7 @@ def mutual_info(C1,C2,n_clusters):
 			if inter!=0 and len(set(ci1))*len(set(cj2))!=0:
 				I+=(inter/float(n))*np.log((n*inter)/float(len(set(ci1))*len(set(cj2))))
 
-	return I
+	return 2*I
 	
 def n_mutual_info(C1,C2,n_clusters):
 	I=mutual_info(C1,C2,n_clusters)
