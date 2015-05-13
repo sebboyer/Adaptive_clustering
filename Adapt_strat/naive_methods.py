@@ -177,38 +177,38 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
 
 def cheating_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
 
-# If Delta_est=0 (ie first querys) choose at random
-if np.shape(Delta_est)==():
-    #print 'Pick at random'
-    return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+    # If Delta_est=0 (ie first querys) choose at random
+    if np.shape(Delta_est)==():
+        #print 'Pick at random'
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
 
-S=spc.similarity(Delta_est)
-n=np.shape(S)[0]
-L=spc.laplacian(S)
-w,v=np.linalg.eig(L)
-ind_sorted_eigvals=np.argsort(w)
-v=v[:,ind_sorted_eigvals]
-w=w[ind_sorted_eigvals]
-v=v[:,1:n_cluster]
+    S=spc.similarity(Delta_est)
+    n=np.shape(S)[0]
+    L=spc.laplacian(S)
+    w,v=np.linalg.eig(L)
+    ind_sorted_eigvals=np.argsort(w)
+    v=v[:,ind_sorted_eigvals]
+    w=w[ind_sorted_eigvals]
+    v=v[:,1:n_cluster]
 
-if Known_K:
-    km=spc.cluster.KMeans(n_clusters=n_cluster)
-    km.fit(v[:,:n_cluster-1])
-    centers=km.cluster_centers_
-else:
-    [clusters,centers]=spc.GMM_cluster(v,n_cluster)
+    if Known_K:
+        km=spc.cluster.KMeans(n_clusters=n_cluster)
+        km.fit(v[:,:n_cluster-1])
+        centers=km.cluster_centers_
+    else:
+        [clusters,centers]=spc.GMM_cluster(v,n_cluster)
 
-# Enter one point per (known) cluster
-choice=[int((n_objects/n_cluster)*(i+1/2.0)) for i in range(min(n_cluster,n_object_per_assessment))]
+    # Enter one point per (known) cluster
+    choice=[int((n_objects/n_cluster)*(i+1/2.0)) for i in range(min(n_cluster,n_object_per_assessment))]
 
 
-#print 'Choosed first : ',choice
-    
-# Complete choice until full
-while len(choice)<n_object_per_assessment:
-    r=np.random.randint(n_objects)
-    if r not in choice:
-        choice.append(r)
+    #print 'Choosed first : ',choice
+        
+    # Complete choice until full
+    while len(choice)<n_object_per_assessment:
+        r=np.random.randint(n_objects)
+        if r not in choice:
+            choice.append(r)
 
 return choice  
     
