@@ -92,7 +92,7 @@ res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_
 
 
 exp_file="experiment/exp_parameters.csv"
-exp_list=['g','h','i','j','k','l']
+exp_list=['a1','b1','c1','d1','e1','f1']
 ret.conduct_experiment(exp_file,exp_list)
 
 
