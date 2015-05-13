@@ -17,3 +17,4 @@ c1,SetObjects/soo_n200_K5_dim8.p,SetAssessors/soa_noisy.p,6,500,10,20,50,0,0,0,1
 d1,SetObjects/soo_n200_K5_dim8.p,SetAssessors/soa_accurate.p,3,500,7,20,50,0,0,0,1,1,1,1,1
 e1,SetObjects/soo_n200_K5_dim8.p,SetAssessors/soa_noisy.p,6,500,7,20,50,0,0,0,1,1,1,1,1
 f1,SetObjects/soo_n200_K5_dim8.p,SetAssessors/soa_noisy.p,8,500,7,20,50,0,0,0,1,1,1,1,1
+test,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,20,50,0,0,0,0,0,0,0,1

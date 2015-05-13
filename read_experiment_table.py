@@ -46,25 +46,25 @@ def conduct_experiment(exp_file,exp_list):
 
 			if params[12]:
 				csvname="diversity"+nexp
-				setOfObjects_choice=nm.rand_ob_gene
+				setOfObjects_choice=nm.diversity_ob_gene
 				adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
 				res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 			
 			if params[13]:
 				csvname="exploit"+nexp
-				setOfObjects_choice=nm.rand_ob_gene
+				setOfObjects_choice=nm.exploitpw_ob_gene
 				adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
 				res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 			
 			if params[14]:
 				csvname="explore"+nexp
-				setOfObjects_choice=nm.rand_ob_gene
+				setOfObjects_choice=nm.explore_ob_gene
 				adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
 				res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 			
 			if params[13]:
 				csvname="centroid"+nexp
-				setOfObjects_choice=nm.rand_ob_gene
+				setOfObjects_choice=nm.centroid_ob_gene
 				adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
 				res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 			

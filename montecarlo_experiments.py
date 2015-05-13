@@ -5,7 +5,6 @@ import csv
 
 def procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,em_prec,EM,true_K,Known_K):
     result=list()
-    variation=list()
     n_objects=len(set_of_objects)
     exp=ass.Experiment(set_of_assessors,set_of_objects,adaptive_method)
     Delta_est=0
@@ -33,14 +32,14 @@ def procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_ass
                 #est_adj=spc.adjacency_2Clusters_eq(Delta_est,n_objects/2,n_objects/2,2)
                 est_adj=spc.adjacency_KClusters(Delta_est,n_clusters)
             else:
-                est_adj=spc.adjacency_Clusters(Delta_est,n_clusters)
+                est_adj=spc.adjacency_Clusters(Delta_est,n_clusters)# Here n_clusters = Kmax
 
   
             est_clusters=vis.clusters_from_adjacency(est_adj)
             s=per.n_mutual_info(real_clusters,est_clusters,0)
             result.append(s)
 
-    return result,variation
+    return result
 
         
 def repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname):
@@ -53,7 +52,7 @@ def repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_asse
     for i in range(n_exps):
         print "Start experiment number "+str(i)
         #try:
-        res,var=procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,em_prec,EM,true_K,Known_K)
+        res=procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,em_prec,EM,true_K,Known_K)
         results.append(res)
         writer=csv.writer(fd_res)
         writer.writerow(res)

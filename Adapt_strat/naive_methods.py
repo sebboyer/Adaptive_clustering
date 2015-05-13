@@ -130,6 +130,7 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
     
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
+        #print 'Pick at random'
         return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
 
     S=spc.similarity(Delta_est)
@@ -148,7 +149,7 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
     else:
         [clusters,centers]=spc.GMM_cluster(v,n_cluster)
     
-    # Enter the closest points to the centroid
+    # Enter the closest points to the centroids
     choice=[]
     for center in centers:
         dmin=99999
@@ -159,6 +160,8 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
                 bestind=i
                 dmin=d
         choice.append(bestind)
+
+    #print 'Choosed first : ',choice
         
     # Complete choice until full
     while len(choice)<n_object_per_assessment:
