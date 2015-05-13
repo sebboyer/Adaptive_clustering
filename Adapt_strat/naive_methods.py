@@ -210,7 +210,7 @@ def cheating_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
         if r not in choice:
             choice.append(r)
 
-return choice  
+    return choice  
     
 ###################################################################################################
 ###############################     Method based on the distance and the confidence values of each pair
