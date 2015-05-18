@@ -211,6 +211,67 @@ def cheating_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
             choice.append(r)
 
     return choice  
+
+
+    ### Improved centroid with exploit
+
+def centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+
+    # If Delta_est=0 (ie first querys) choose at random
+    if np.shape(Delta_est)==():
+        #print 'Pick at random'
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+
+    S=spc.similarity(Delta_est)
+    n=np.shape(S)[0]
+    L=spc.laplacian(S)
+    w,v=np.linalg.eig(L)
+    ind_sorted_eigvals=np.argsort(w)
+    v=v[:,ind_sorted_eigvals]
+    w=w[ind_sorted_eigvals]
+    v=v[:,1:n_cluster]
+    
+    if Known_K:
+        km=spc.cluster.KMeans(n_clusters=n_cluster)
+        km.fit(v[:,:n_cluster-1])
+        centers=km.cluster_centers_
+    else:
+        [clusters,centers]=spc.GMM_cluster(v,n_cluster)
+    
+    ###########    Choose the closest points to the centroids
+    choice=[]
+    for center in centers:
+        dmin=99999
+        bestind=-1
+        for i in range(np.shape(v)[0]):
+            d=np.sum(np.square(center-v[i,:]))
+            if d<dmin:
+                bestind=i
+                dmin=d
+        choice.append(bestind)
+
+    #print 'Choosed first : ',choice
+        
+    #############   Complete choice until full using exploit method
+    mu=0.5
+    sigma=0.01
+    xk,pk=compute_distrib(results,n_objects,mu,sigma)   
+    
+    rv=stats.rv_discrete(values=(xk,pk))
+    pair_numbers=rv.rvs(size=3*n_object_per_assessment)
+
+    k=0
+    while len(choice)<n_object_per_assessment:
+        p=pair_numbers[k]
+        i=p/n_objects
+        j=p % n_objects
+        if i not in choice:
+            choice.append(i)
+        if j not in choice and len(choice)<n_object_per_assessment:
+            choice.append(j)
+        k+=1
+
+    return choice
     
 ###################################################################################################
 ###############################     Method based on the distance and the confidence values of each pair
@@ -408,28 +469,9 @@ def exploitpw_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,
     if np.shape(Delta_est)==():
         return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
 
-    pairs=cooccurences_pairs(results)
-    w=np.max([x[0] for x in pairs.values()])
-    
-    
-    xk=[]
-    for i in range(n_objects):
-        for j in range(i):
-            xk.append(i*n_objects+j)
-            
     mu=0.5
     sigma=0.01
-
-    pk=[]
-    for i in range(n_objects):
-        for j in range(i):
-            if (i,j) in pairs:
-                pk.append(np.exp(-((pairs[(i,j)][1]/float(pairs[(i,j)][0]))-mu)**2/(2*sigma)))
-            else:
-                pk.append(1)
-    s=np.sum(pk)
-    for k in range(len(pk)):
-        pk[k]=pk[k]/float(s)    
+    xk,pk=compute_distrib(results,n_objects,mu,sigma)   
     
     rv=stats.rv_discrete(values=(xk,pk))
     pair_numbers=rv.rvs(size=3*n_object_per_assessment)
@@ -447,6 +489,30 @@ def exploitpw_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,
         k+=1
     
     return choice
+
+
+def compute_distrib(results,n_objects,mu,sigma):
+
+    pairs=cooccurences_pairs(results)
+    w=np.max([x[0] for x in pairs.values()])
+
+    xk=[]
+    for i in range(n_objects):
+        for j in range(i):
+            xk.append(i*n_objects+j)
+
+    pk=[]
+    for i in range(n_objects):
+        for j in range(i):
+            if (i,j) in pairs:
+                pk.append(np.exp(-((pairs[(i,j)][1]/float(pairs[(i,j)][0]))-mu)**2/(2*sigma)))
+            else:
+                pk.append(1)
+    s=np.sum(pk)
+    for k in range(len(pk)):
+        pk[k]=pk[k]/float(s)  
+
+    return xk,pk
 
 
 

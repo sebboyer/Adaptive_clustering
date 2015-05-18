@@ -74,6 +74,12 @@ def conduct_experiment(exp_file,exp_list):
 				adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
 				res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
 			
+			if int(params[17]):
+				csvname="centroid_exploit"+nexp
+				setOfObjects_choice=nm.centroid_exploit_ob_gene
+				adaptive_method=ass.Adaptive_method(assessors_choice,setOfObjects_choice)
+				res=mce.repeat_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_assessments,n_object_per_assessment,real_clusters,eval_num,n_exps,em_prec,EM,true_K,Known_K,csvname)
+			
 		except:
 			print "Error with experiment "+str(params[0])
 		
