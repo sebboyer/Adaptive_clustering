@@ -276,7 +276,7 @@ def centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Del
 ### Alternate : First exploit then centroid+exploit
 
 def centroid_exploit_alternate_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
-    if it<50:
+    if it<50 or it>80:
         choice=exploitpw_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
     else:
         choice=centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)

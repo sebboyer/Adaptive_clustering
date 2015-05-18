@@ -21,6 +21,6 @@ test,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,20,3,0,0,0,0,0,0,0,
 a2,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,10,50,0,1,0,1,0,1,0,1,0,,
 a3,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,10,50,0,0,1,1,0,1,0,1,0,,
 a4,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,10,50,0,1,1,1,0,1,0,1,0,,
-a5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,30,10,50,0,0,0,0,0,0,0,0,0,1,
-a6,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,50,10,50,0,0,0,0,0,0,0,0,0,1,
-a7,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,70,10,50,0,0,0,0,0,0,0,0,0,1,
+a5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,30,10,50,0,0,0,1,0,1,0,1,0,1,1
+b5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,50,10,50,0,0,0,1,0,1,0,1,0,1,1
+c5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,70,10,50,0,0,0,1,0,1,0,1,0,1,1
