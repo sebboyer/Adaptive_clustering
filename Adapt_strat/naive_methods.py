@@ -27,7 +27,7 @@ The framework for adaptive methods is as follows:
 def rand_ass_gene(results,n_ass,n_objects):
     return np.random.randint(0,n_ass)
 
-def rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
     res=list()
     for i in range(n_object_per_assessment):
         res.append(np.random.randint(0,n_objects))
@@ -44,7 +44,7 @@ def equi_ass_gene(results,n_ass,n_objects): # Return least asked assessor
     return np.argsort([ len(results.values()[i]) for i in results.keys()])[0]
 
 # Returns a group of objects formed by randomly chosen elements from the least viewed ones
-def equi_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K): # Return the list of pairs in increasing orders of views
+def equi_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it): # Return the list of pairs in increasing orders of views
     occurences=np.zeros((1,n_objects))
     for i in range(n_objects):
         occurences[0,i]=0
@@ -60,7 +60,7 @@ def equi_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est
 ###################################################################################################
 
 
-def diversity_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def diversity_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
 
     pairs=cooccurences_pairs(results)
@@ -126,12 +126,12 @@ def adja_list(pairs,n_objects):
 ###############################     Method based on the centroids of the current clusters
 ###################################################################################################
 
-def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
     
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
         print 'Pick at random'
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     S=spc.similarity(Delta_est)
     n=np.shape(S)[0]
@@ -175,12 +175,12 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
 
     ##### TRY picking the first three in each different clusters (cheating)
 
-def cheating_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def cheating_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
         #print 'Pick at random'
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     S=spc.similarity(Delta_est)
     n=np.shape(S)[0]
@@ -215,12 +215,12 @@ def cheating_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
 
     ### Improved centroid with exploit
 
-def centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
         #print 'Pick at random'
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     S=spc.similarity(Delta_est)
     n=np.shape(S)[0]
@@ -272,6 +272,18 @@ def centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Del
         k+=1
 
     return choice
+
+### Alternate : First exploit then centroid+exploit
+
+def centroid_exploit_alternate_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
+    if it<50:
+        choice=exploitpw_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
+    else:
+        choice=centroid_exploit_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
+    return choice
+
+
+
     
 ###################################################################################################
 ###############################     Method based on the distance and the confidence values of each pair
@@ -285,10 +297,10 @@ def discriminatory_ass_gene(results,n_ass,n_objects):
     return np.argsort(Assessors_est)[0]
 
 # Choose set of objects by pair among the least confident pairs
-def discriminatory_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def discriminatory_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
     if np.shape(S_est)==():
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
     
     s=np.argsort(S_est,axis=None)
     n=np.shape(S_est)[0]
@@ -315,11 +327,11 @@ def objects_from_edges(l_edges,nob):
 ###################################################################################################
 
 
-def graph_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def graph_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     G=graph_from_dist(Delta_est)
     edges_betweeness=gra.betweeness(G)
@@ -332,7 +344,7 @@ def graph_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_es
     
     return res
 
-def graph2_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def graph2_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
@@ -417,11 +429,11 @@ def best_bet_objects(results,edges_betweeness,nob,n_objects):
 ###################################################################################################
 
 
-def explore_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def explore_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
 
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     pairs=cooccurences_pairs(results)
     w=np.max([x[0] for x in pairs.values()])
@@ -464,10 +476,10 @@ def explore_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_
 ###################################################################################################
 
 
-def exploitpw_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
+def exploitpw_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
-        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     mu=0.5
     sigma=0.01

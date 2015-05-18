@@ -100,14 +100,14 @@ class Experiment:
                     self.results[assessor_ind][ind1,ind2]=(result[k]==result[j])
             #print result
 
-    def procede_adaptive_assessment(self,n_cluster,true_K,Known_K,n_object_per_assessment,Delta_est,S_est):
+    def procede_adaptive_assessment(self,n_cluster,true_K,Known_K,n_object_per_assessment,Delta_est,S_est,it):
 
         # Generate the next assessor from results
         assessor_ind=self.adaptive_method.assessor_generator(self.results,len(self.set_of_assessors),len(self.set_of_objects))
         assessor=self.set_of_assessors[assessor_ind]
 
         # Generate the next set of objects indexes from results
-        set_of_objects_ind=self.adaptive_method.objects_generator(self.results,len(self.set_of_assessors),len(self.set_of_objects),n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+        set_of_objects_ind=self.adaptive_method.objects_generator(self.results,len(self.set_of_assessors),len(self.set_of_objects),n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
         set_of_objects=[self.set_of_objects[j] for j in set_of_objects_ind]
 
         assessment=Assessment(assessor,set_of_objects)
@@ -141,8 +141,8 @@ class Adaptive_method:
     def assessor_generator(self,results,n_assessors,n_objects):
         return self.assessor_generator_function(results,n_assessors,n_objects)
 
-    def objects_generator(self,results,n_assessors,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K):
-        return self.objects_generator_function(results,n_assessors,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K)
+    def objects_generator(self,results,n_assessors,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it):
+        return self.objects_generator_function(results,n_assessors,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
 
 

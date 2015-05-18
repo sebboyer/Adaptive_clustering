@@ -15,7 +15,7 @@ def procede_exp(set_of_assessors,set_of_objects,n_clusters,adaptive_method,n_ass
     for j in range(n_assessments):
 
         # Choose and submit new query 
-        exp.procede_adaptive_assessment(n_clusters,true_K,Known_K,n_object_per_assessment,Delta_est,S_est)
+        exp.procede_adaptive_assessment(n_clusters,true_K,Known_K,n_object_per_assessment,Delta_est,S_est,j)
 
         # Evaluate the quality of the new clusters
         if j in eval_num:

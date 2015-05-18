@@ -102,7 +102,7 @@ def adjacency_KClusters(Dist,k): # To be fixed !!!
     return A
 
 
-def adjacency_Clusters(Dist,kmax): # To be fixed !!!
+def adjacency_Clusters(Dist,kmax): 
     S=similarity(Dist)
     n=np.shape(S)[0]
     L=laplacian(S)
