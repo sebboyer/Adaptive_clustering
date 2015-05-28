@@ -24,3 +24,10 @@ a4,SetObjects/soo_100_3.p,SetAssessors/soa_noisy.p,3,300,7,10,50,0,1,1,1,0,1,0,1
 a5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,30,10,50,0,0,0,1,0,1,0,1,0,1,1
 b5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,50,10,50,0,0,0,1,0,1,0,1,0,1,1
 c5,SetObjects/soo_500_easy.p,SetAssessors/soa_noisy.p,3,300,70,10,50,0,0,0,1,0,1,0,1,0,1,1
+a6,SetObjects/soo_100_tau2.p,SetAssessors/soa_accurate.p,10,300,5,10,30,0,0,0,1,0,1,0,1,0,1,
+b6,SetObjects/soo_100_tau1.p,SetAssessors/soa_accurate.p,10,300,5,10,30,0,0,0,1,0,1,0,1,0,1,
+c6,SetObjects/soo_100_tau05.p,SetAssessors/soa_accurate.p,10,300,5,10,30,0,0,0,1,0,1,0,1,0,1,
+d6,SetObjects/soo_100_tau02.p,SetAssessors/soa_accurate.p,10,300,5,10,30,0,0,0,1,0,1,0,1,0,1,
+e6,SetObjects/soo_100_tau01.p,SetAssessors/soa_accurate.p,10,300,5,10,30,0,0,0,1,0,1,0,1,0,1,
+f6,SetObjects/soo_100_tau05.p,SetAssessors/soa_accurate.p,10,300,8,10,30,0,0,0,1,0,1,0,1,0,1,
+g6,SetObjects/soo_100_tau05.p,SetAssessors/soa_noisy.p,10,300,5,10,30,0,0,0,1,0,1,0,1,0,1,

@@ -12,8 +12,16 @@ import matplotlib.colors as col
 
 def generate_mean(dim,mag):
     return mag*np.random.randn(dim)+mag
-def generate_covariance(dim):
-    return np.eye(dim)+(np.random.rand(dim,dim)-0.5)*0.2
+
+
+def generate_covariance(dim,var):
+    Cov=(np.random.rand(dim,dim)-0.5)*0.2
+    for i in range(dim):
+        Cov[i,i]=var[i]
+    return Cov
+
+
+
 def generate_samples(n,mean,cov):
     return np.random.multivariate_normal(mean,cov,n)
 
@@ -82,18 +90,76 @@ class Cluster:
         self.dim=dim
         self.mean=generate_mean(dim,mag)
         self.cov=generate_covariance(dim)
+
+
     def add_object(self,ob):
         self.objects.append(ob)
+
     def add_objects(self,list_objects):
         self.objects+=list_objects
+
     def select_objects(self,indices):
         return self.objects[indices]
+
     def populate_random_multivariate(self):
         samp=generate_samples(self.N,self.mean,self.cov)
         for i in range(self.N):
             o=Object(self.dim,i)
             o.set_features(samp[i,:])
             self.add_object(o)
+
+
+
+
+class SetOfObjects:
+    def __init__(self,n_clusters,n_objects,dim):
+        self.dim=dim
+        self.nob=n_objects
+        self.nclust=n_clusters
+        self.set_of_objects=list()
+        self.set_of_clusters=list()
+        self.means=np.zeros((n_clusters,dim))
+        self.variances=np.zeros((n_clusters,dim))
+
+    def generate_clusters(self,tau):
+
+        mag=100
+        for d in range(self.dim):
+
+            # generate means along the 1-dimensional axis
+            M=mag*np.random.randn(self.nclust)+mag
+            index_array=np.argsort(np.argsort(M))
+            m=np.sort(M)
+            self.means[:,d]=M
+
+            # Assign sigma
+            s1=999999
+            s2=(m[1]-m[0])/float(tau)
+            for c in range(self.nclust-2):
+                sigma=np.minimum(s1,s2)
+                self.variances[c,d]=sigma
+                s1=(m[c+1]-m[c])/float(tau)
+                s2=(m[c+2]-m[c+1])/float(tau)
+
+            sigma=np.minimum(s1,s2)
+            self.variances[self.nclust-2,d]=sigma
+
+            s1=(m[self.nclust-1]-m[self.nclust-2])/float(tau)
+            s2=999999
+            sigma=np.minimum(s1,s2)
+            self.variances[self.nclust-1,d]=sigma
+
+        self.variances=self.variances[index_array,:]
+
+        for c in range(self.nclust):
+            ob_per_clust=self.nob/self.nclust
+            samp=generate_samples(ob_per_clust,self.means[c,:],generate_covariance(self.dim,self.variances[c,:]))
+            for i in range(ob_per_clust):
+                o=Object(self.dim,i)
+                o.set_features(samp[i,:])
+                self.set_of_objects.append(o)
+
+
 
 # <codecell>
 

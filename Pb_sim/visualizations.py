@@ -33,7 +33,7 @@ def visualization_2D(set_of_objects,clusters_indexes,dim1,dim2):
     x=[o.features[dim1] for o in set_of_objects]
     y=[o.features[dim2] for o in set_of_objects]
     colours_available=['blue','red','green','c','m']
-    colours=[colours_available[clusters_indexes[i]] for i in range(n)]
+    colours=[colours_available[clusters_indexes[i]%(len(colours_available)-1)] for i in range(n)]
     fig, ax = plt.subplots(figsize=(8,4))
     l = ax.scatter(x, y, c=colours)
     return fig
