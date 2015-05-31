@@ -18,7 +18,7 @@ class Assessor:
     # Number of feature the assessor is aware of
     def number_feature_awareness(self,n_feat_total):
         n_feat_observed=n_feat_total   # int(np.random.beta(2,self.n_feat_param)*n_feat_total)
-        return 
+        return n_feat_observed
     
     # The indices of the feature the assessor is aware of
     def indices_feature_awareness(self,n_feat_total):
