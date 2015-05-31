@@ -32,6 +32,14 @@ from definitions import *
 # 		pck.dump( [set_of_objects,real_clusters],open( name+".p", "wb" ) )
 # 		fig_ob.savefig(name+".png")
 
+n_objects=150
+n_clusters=3
+dimension=4
+
+[set_of_objects,real_clusters,fig_ob]=pbg.generate_objects_from_csv("SetObjects/iris.csv",n_objects,n_clusters,dimension)
+pck.dump( [set_of_objects,real_clusters],open( "SetObjects/iris.p", "wb" ) )
+fig_ob.savefig("SetObjects/iris.png")
+
 
 ############### GENERATE SET OF ASSESSORS
 
