@@ -47,6 +47,21 @@ def generate_objects_from_csv(filename,n_objects,n_clusters,dimension):
 	return [set_of_objects,real_clusters,fig]
 
 
+def generate_objects_from_csv2(filename,n_objects,n_clusters,dimension,class_col):
+	data=utils.extractArray_fromCSV(filename,False)
+	opc=n_objects/n_clusters
+	set_of_objects=list()
 
+	for c in range(n_clusters):
+		for i in range(opc):
+			ob_ind=c*opc+i
+			obj=data[ob_ind]
+			o=ass.Object(dimension,ob_ind)
+			o.set_features(obj[:dimension])
+			set_of_objects.append(o)
+
+	real_clusters=rc.kmeans_clusters(set_of_objects,n_clusters)
+	fig=vis.visualization_2D(set_of_objects,real_clusters,0,1)
+	return [set_of_objects,real_clusters,fig]
 	
 
