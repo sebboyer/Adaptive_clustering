@@ -38,3 +38,4 @@ d7,SetObjects/soo_100_tau02.p,SetAssessors/soa_accurate.p,10,300,8,10,30,0,0,0,1
 e7,SetObjects/soo_100_tau01.p,SetAssessors/soa_accurate.p,10,300,8,10,30,0,0,0,1,0,1,0,1,0,,1
 f7,SetObjects/soo_100_tau05.p,SetAssessors/soa_accurate.p,10,300,12,10,30,0,0,0,1,0,1,0,1,0,,1
 a8,SetObjects/australian_credit.p,SetAssessors/soa_accurate.p,4,300,30,10,30,0,0,0,1,0,1,0,1,0,,1
+a9,SetObjects/iris.p,SetAssessors/soa_accurate.p,5,300,10,10,30,0,0,0,1,0,1,0,1,0,,1
