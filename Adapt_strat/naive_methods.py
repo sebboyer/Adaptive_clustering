@@ -130,7 +130,7 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
     
     # If Delta_est=0 (ie first querys) choose at random
     if np.shape(Delta_est)==():
-        print 'Pick at random'
+        #print 'Pick at random'
         return rand_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S_est,n_cluster,Known_K,it)
 
     S=spc.similarity(Delta_est)
@@ -161,7 +161,7 @@ def centroid_ob_gene(results,n_ass,n_objects,n_object_per_assessment,Delta_est,S
                 dmin=d
         choice.append(bestind)
 
-    print 'Choosed first : ',choice
+    #print 'Choosed first : ',choice
         
     # Complete choice until full
     while len(choice)<n_object_per_assessment:
